@@ -30,7 +30,7 @@ public class Stockanalysis implements ActionListener {
 	JPanel panel;
 	String disindex;
 
-	public static void main(String[] args) throws IOException {
+	public static void main1(String[] args) throws IOException {
 
 		Stockanalysis gui = new Stockanalysis();
 		gui.window();
@@ -230,7 +230,7 @@ public class Stockanalysis implements ActionListener {
 
 		label.setFont(font);// 设置标签字体
 		label.setText("等待用户输入信息");// 设置默认显示文字
-		label1.setText("请输入股票代码：");
+		label1.setText("请输入股票代码:(例如:000001)");
 		
 		chart=new ChartPanel(null);
 
