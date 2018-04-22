@@ -30,7 +30,7 @@ public class Stockanalysis implements ActionListener {
 	JPanel panel;
 	String disindex;
 
-	public static void main1(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 
 		Stockanalysis gui = new Stockanalysis();
 		gui.window();
