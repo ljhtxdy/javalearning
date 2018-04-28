@@ -242,7 +242,7 @@ public class Swingwindows implements ActionListener{
 
 	            JFileChooser jfc=new JFileChooser();  
 
-	            jfc.setCurrentDirectory(new File("D:\\"));//设置当前目录
+	            jfc.setCurrentDirectory(new File("C:\\Users\\Meng Xue\\Desktop\\"));//设置当前目录
 
 	            jfc.setAcceptAllFileFilterUsed(false); //禁用选择 所有文件 
 
@@ -327,7 +327,7 @@ public class Swingwindows implements ActionListener{
 
 		XSSFSheet sheet = workbook.getSheetAt(0); // 获取第一个工作表的对象
 
-		XSSFSheet newsheet123 = workbook.cloneSheet(0, "Raw_data_"); // COPY第一个工作表的对象
+		XSSFSheet newsheet123 = workbook.cloneSheet(0, "newsheet123"); // COPY第一个工作表的对象
 
 
 
@@ -481,7 +481,7 @@ public class Swingwindows implements ActionListener{
 
 		
 
-		XSSFSheet newsheet = workbook.cloneSheet(0, "raw_data"); // COPY第一个工作表的对象
+		XSSFSheet newsheet = workbook.cloneSheet(0, "new sheet"); // COPY第一个工作表的对象
 
 
 
@@ -496,6 +496,8 @@ public class Swingwindows implements ActionListener{
 			}
 
 		}
+		
+		
 
 		for (int i = index1-1; i >= 0; i--) {
 
@@ -648,41 +650,40 @@ public class Swingwindows implements ActionListener{
 
 				
 			for (int n = 0; n < List_.length; n++) {
-				Double[] minimum=new Double[number123];
+				Double[] minimum=new Double[number123/2];
+				int groupnumber=0;
 				for(int m = 0; m < number123; m++)
 				{
-					minimum[m]=data[n]-predata[m];
+					minimum[groupnumber]=data[n]-predata[m];
+					m=m+1;
+					groupnumber=groupnumber+1;
 				}
 				
-				for(int m=0;m<number123-1;m++) {
-					if(minimum[m]<minimum[m+1])
+				int index12=0;
+				Double minidata=minimum[0];
+				
+				for(int m=1;m<number123/2;m++) {
+					if(minidata>minimum[m])
 					{
-						minimum[m+1]
-						
-						
-						
+						minidata=minimum[m];
+						index12=m;			
 					}
 				}
-				    
-				int mini=minimum;
-
-				preindex[n] = List_[n]-prelist[mini];
-				preindex[n+1]=List_[n]-prelist[mini];
-
 				
-				m=m+1;
-				
+				minimum[index12]=0.00;
+
+
+				preindex[n] = List_[n]-prelist[index12*2];
+				preindex[n+1]=List_[n]-prelist[index12*2];
+
 				n=n+1;
 			}
-			
 			
 			for (int b = start; b <= final_; b++) {
 
 				XSSFRow rowb=newsheet.createRow(b);
 
 				for (int c = 0; c < List_.length; c++) {
-
-
 
 					if (sheet.getRow(b).getCell(List_[c]) != null
 
@@ -694,11 +695,7 @@ public class Swingwindows implements ActionListener{
 
 					}
 
-
-
 				}
-
-
 
 			}
 			
@@ -722,26 +719,21 @@ public class Swingwindows implements ActionListener{
 				}
 				
 			}
+				
 			}
+			
+			i=0;
 
 
 		}
 
-		
-/*
 		XSSFSheet finalsheet=workbook.createSheet("Revised Data");
-
-		
 
 		XSSFRow firstrow=newsheet.getRow(0);
 
 		XSSFRow firstrow_=finalsheet.createRow(0);
 
-		
-
 		int column=firstrow.getLastCellNum();
-
-	
 
 		int j=0;
 
@@ -767,7 +759,7 @@ public class Swingwindows implements ActionListener{
 
 		
 
-		int m=0;
+		int mm=0;
 
 		for(int i=0;i<column;i++) {
 
@@ -781,13 +773,13 @@ public class Swingwindows implements ActionListener{
 
 			Double data= newsheet.getRow(k).getCell(i).getNumericCellValue();
 
-			finalsheet.getRow(k).createCell(m).setCellValue(data);
+			finalsheet.getRow(k).createCell(mm).setCellValue(data);
 
 			}	
 
 			}
 
-			m=m+1;
+			mm=mm+1;
 
 			}
 
@@ -802,8 +794,6 @@ public class Swingwindows implements ActionListener{
 		workbook.removeSheetAt(0);
 
 		workbook.removeSheetAt(0);
-
-*/
 
 
 
