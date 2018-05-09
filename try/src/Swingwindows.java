@@ -29,8 +29,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.*;
-
+import org.apache.poi.ss.usermodel.charts.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.charts.*;
 
 import java.text.*;
 import java.util.Date;
@@ -197,7 +199,7 @@ public class Swingwindows implements ActionListener{
 	        Select.setBounds(250, 200, 100, 60);
 	        Execute.setBounds(250, 300, 100, 60);
 	        timeLabel.setBounds(400, 500, 150, 100);
-	        timeLabel2.setBounds(0, 500, 150, 100);
+	        timeLabel2.setBounds(50, 30, 500, 500);
 	        
 	        label=new JLabel();
 	        label.setText("Copyright@DSIMS-Jiahui Liu");
@@ -663,14 +665,14 @@ public class Swingwindows implements ActionListener{
 				Double minidata=minimum[0];
 				
 				for(int m=1;m<number123/2;m++) {
-					if(minidata>minimum[m])
+					if(minidata>minimum[m] && minimum[m]>=0)
 					{
 						minidata=minimum[m];
 						index12=m;			
 					}
 				}
 				
-				minimum[index12]=0.00;
+				predata[index12*2]=0.00;
 
 
 				preindex[n] = List_[n]-prelist[index12*2];
@@ -794,16 +796,116 @@ public class Swingwindows implements ActionListener{
 		workbook.removeSheetAt(0);
 
 		workbook.removeSheetAt(0);
+		
+		FileOutputStream stream = new FileOutputStream(
+
+				new File("C:\\Users\\Meng Xue\\Desktop\\final result.xlsx"));
+		
+		workbook.write(stream); // 写入文件
+
+		workbook.close(); // 关闭
+
+		stream.close();
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// test part for the plot chart
+		File file1 = new File("C:\\Users\\Meng Xue\\Desktop\\testpart.xlsx");
 
 
 
-	FileOutputStream stream = new FileOutputStream(
+		FileInputStream fIP1 = new FileInputStream(file1);
 
-			new File(file_name));workbook.write(stream); // 写入文件
+		// Get the workbook instance for XLSX file
 
-	workbook.close(); // 关闭
+		XSSFWorkbook workbook12 = new XSSFWorkbook(fIP1);
 
-	stream.close();
+		if (file1.isFile() && file1.exists()) {
+
+			System.out.println("openworkbook.xlsx file open successfully.");
+
+		} else {
+
+			System.out.println("Error to open workbook.xlsx file.");
+
+		}
+
+
+
+		XSSFSheet sheet1 = workbook12.getSheetAt(1); // 获取第一个工作表的对象
+		
+
+		XSSFDrawing xlsx_drawing = sheet1.createDrawingPatriarch();
+
+		/* Define anchor points in the worksheet to position the chart */
+
+		XSSFClientAnchor anchor = xlsx_drawing.createAnchor(0, 0, 0, 0, 0, 5, 10, 15);
+
+		/* Create the chart object based on the anchor point */
+
+		XSSFChart my_line_chart = xlsx_drawing.createChart(anchor);
+
+		/* Define legends for the line chart and set the position of the legend */
+
+		XSSFChartLegend legend = my_line_chart.getOrCreateLegend();
+
+		legend.setPosition(LegendPosition.BOTTOM);
+
+		/* Create data for the chart */
+
+		LineChartData data = my_line_chart.getChartDataFactory().createLineChartData();
+
+		/* Define chart AXIS */
+
+		ChartAxis bottomAxis = my_line_chart.getChartAxisFactory().createCategoryAxis(AxisPosition.BOTTOM);
+
+		ValueAxis leftAxis = my_line_chart.getChartAxisFactory().createValueAxis(AxisPosition.LEFT);
+
+		leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+
+		/* Define Data sources for the chart */
+
+		/* Set the right cell range that contain values for the chart */
+
+		/* Pass the worksheet and cell range address as inputs */
+
+		/*
+
+		 * Cell Range Address is defined as First row, last row, first column, last
+
+		 * column
+
+		 */
+
+		ChartDataSource<Number> xs1 = DataSources.fromNumericCellRange(finalsheet, new CellRangeAddress(2, 50, 1, 1));
+
+		ChartDataSource<Number> ys1 = DataSources.fromNumericCellRange(finalsheet, new CellRangeAddress(2, 50, 2, 2));
+		
+
+
+
+
+		/* Add chart data sources as data to the chart */
+
+		data.addSeries(xs1, ys1);
+
+		FileOutputStream stream1 = new FileOutputStream(
+
+				new File("C:\\Users\\Meng Xue\\Desktop\\final test.xlsx"));
+		
+		workbook12.write(stream1); // 写入文件
+
+		workbook12.close(); // 关闭
+
+		stream1.close();
+
 
 	}
 }
