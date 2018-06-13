@@ -6,6 +6,11 @@ import java.io.File;
 
 import java.awt.Dimension;
 
+import org.openxmlformats.schemas.drawingml.x2006.chart.*;
+import org.openxmlformats.schemas.drawingml.x2006.main.CTTextBody;
+import org.openxmlformats.schemas.drawingml.x2006.main.CTTextParagraph;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.*;
+
   
 
 import javax.swing.JButton;  
@@ -41,6 +46,7 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
+import org.apache.poi.ss.usermodel.ClientAnchor;
 
 public class Swingwindows implements ActionListener{  
 	    SimpleDateFormat dateFormatter ;
@@ -55,9 +61,9 @@ public class Swingwindows implements ActionListener{
 	    
 	    String time;
 	    
-	    static String IMG_PATH1="C:\\Users\\Meng Xue\\Pictures\\taiyang.jpg";
-	    static String IMG_PATH2="C:\\Users\\Meng Xue\\Pictures\\taiyang.jpg";
-	    static String IMG_PATH3="C:\\Users\\Meng Xue\\Pictures\\taiyang.jpg";
+	    static String IMG_PATH1="C:\\Users\\Jiahui\\Desktop\\Wintech.jpg";
+	    static String IMG_PATH2="C:\\\\Users\\\\Jiahui\\\\Desktop\\\\Wintech.jpg";
+	    static String IMG_PATH3="C:\\\\Users\\\\Jiahui\\\\Desktop\\\\Wintech.jpg";
 
 
 	    public static void main(String[] args) throws IOException{  
@@ -199,7 +205,7 @@ public class Swingwindows implements ActionListener{
 	        Select.setBounds(250, 200, 100, 60);
 	        Execute.setBounds(250, 300, 100, 60);
 	        timeLabel.setBounds(400, 500, 150, 100);
-	        timeLabel2.setBounds(50, 30, 500, 500);
+	        timeLabel2.setBounds(170, 0, 300, 200);
 	        
 	        label=new JLabel();
 	        label.setText("Copyright@DSIMS-Jiahui Liu");
@@ -244,7 +250,7 @@ public class Swingwindows implements ActionListener{
 
 	            JFileChooser jfc=new JFileChooser();  
 
-	            jfc.setCurrentDirectory(new File("C:\\Users\\Meng Xue\\Desktop\\"));//设置当前目录
+	            jfc.setCurrentDirectory(new File("C:\\\\Users\\\\Jiahui\\\\Desktop\\\\"));//设置当前目录
 
 	            jfc.setAcceptAllFileFilterUsed(false); //禁用选择 所有文件 
 
@@ -260,7 +266,7 @@ public class Swingwindows implements ActionListener{
 
 	            jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );  
 
-	            jfc.showDialog(new JLabel(),"确定(可别选错了呦^-^)");  
+	            jfc.showDialog(new JLabel(),"Select");  
 
 	            File file=jfc.getSelectedFile();  
 
@@ -295,6 +301,61 @@ public class Swingwindows implements ActionListener{
 	    	    }
 
 	    }
+	    
+		private static void setRoundedCorners(XSSFChart chart, boolean setVal) {
+		    if (chart.getCTChartSpace().getRoundedCorners() == null) chart.getCTChartSpace().addNewRoundedCorners();
+		    chart.getCTChartSpace().getRoundedCorners().setVal(setVal);
+		};
+		
+		
+		
+		public static XSSFCell createCell(XSSFRow row, int colIndex, long value) {
+			XSSFCell cell = row.createCell(colIndex);
+			cell.setCellValue(value);
+			return cell;
+		}
+		
+		/**
+		 * Sets category axis title
+		 * 
+		 * @param chart graph
+		 * @param axisIdx axis id
+		 * @param title title of the axis
+		 */
+		public static void setCatAxisTitle(XSSFChart chart, int axisIdx, String title) {
+		    CTCatAx valAx = chart.getCTChart().getPlotArea().getCatAxArray(axisIdx);
+		    CTTitle ctTitle = valAx.addNewTitle();
+		    ctTitle.addNewLayout();
+		    ctTitle.addNewOverlay().setVal(false);
+		    CTTextBody rich = ctTitle.addNewTx().addNewRich();
+		    rich.addNewBodyPr();
+		    rich.addNewLstStyle();
+		    CTTextParagraph p = rich.addNewP();
+		    p.addNewPPr().addNewDefRPr();
+		    p.addNewR().setT(title);
+		    p.addNewEndParaRPr();
+		}
+
+		/**
+		 * Sets value axis title
+		 * 
+		 * @param chart graph
+		 * @param axisIdx axis id
+		 * @param title title of the axis
+		 */
+		public static void setValueAxisTitle(XSSFChart chart, int axisIdx, String title) {
+		    CTValAx valAx = chart.getCTChart().getPlotArea().getValAxArray(axisIdx);
+		    CTTitle ctTitle = valAx.addNewTitle();
+		    ctTitle.addNewLayout();
+		    ctTitle.addNewOverlay().setVal(false);
+		    CTTextBody rich = ctTitle.addNewTx().addNewRich();
+		    rich.addNewBodyPr();
+		    rich.addNewLstStyle();
+		    CTTextParagraph p = rich.addNewP();
+		    p.addNewPPr().addNewDefRPr();
+		    p.addNewR().setT(title);
+		    p.addNewEndParaRPr();
+		}
     
 
 	public static void RevisedData(String file_name) throws Exception {
@@ -305,9 +366,9 @@ public class Swingwindows implements ActionListener{
 
 
 
-		File file = new File(file_name);
+		File file1 = new File(file_name);
 
-
+/*
 
 		FileInputStream fIP = new FileInputStream(file);
 
@@ -799,7 +860,7 @@ public class Swingwindows implements ActionListener{
 		
 		FileOutputStream stream = new FileOutputStream(
 
-				new File("C:\\Users\\Meng Xue\\Desktop\\final result.xlsx"));
+				new File("C:\\\\Users\\\\Jiahui\\\\Desktop\\\\final result.xlsx"));
 		
 		workbook.write(stream); // 写入文件
 
@@ -807,17 +868,8 @@ public class Swingwindows implements ActionListener{
 
 		stream.close();
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		// test part for the plot chart
-		File file1 = new File("C:\\Users\\Meng Xue\\Desktop\\testpart.xlsx");
+		*/
+
 
 
 
@@ -839,24 +891,29 @@ public class Swingwindows implements ActionListener{
 
 
 
-		XSSFSheet sheet1 = workbook12.getSheetAt(1); // 获取第一个工作表的对象
+		XSSFSheet sheet1 = workbook12.getSheetAt(0); // 
 		
 
 		XSSFDrawing xlsx_drawing = sheet1.createDrawingPatriarch();
 
 		/* Define anchor points in the worksheet to position the chart */
 
-		XSSFClientAnchor anchor = xlsx_drawing.createAnchor(0, 0, 0, 0, 0, 5, 10, 15);
+		XSSFClientAnchor anchor = xlsx_drawing.createAnchor(0, 0, 0, 0, 0, 5, 25, 35);
 
 		/* Create the chart object based on the anchor point */
+		
+		
+
 
 		XSSFChart my_line_chart = xlsx_drawing.createChart(anchor);
+		
+		setRoundedCorners((XSSFChart)my_line_chart, false);
 
 		/* Define legends for the line chart and set the position of the legend */
 
 		XSSFChartLegend legend = my_line_chart.getOrCreateLegend();
 
-		legend.setPosition(LegendPosition.BOTTOM);
+		legend.setPosition(LegendPosition.TOP);
 
 		/* Create data for the chart */
 
@@ -867,8 +924,20 @@ public class Swingwindows implements ActionListener{
 		ChartAxis bottomAxis = my_line_chart.getChartAxisFactory().createCategoryAxis(AxisPosition.BOTTOM);
 
 		ValueAxis leftAxis = my_line_chart.getChartAxisFactory().createValueAxis(AxisPosition.LEFT);
+		ValueAxis rightAxis = my_line_chart.getChartAxisFactory().createValueAxis(AxisPosition.RIGHT);
+	
 
 		leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+
+		
+		/*CTPlotArea plotArea = my_line_chart.getCTChart().getPlotArea();
+		
+		plotArea.getCatAxArray()[0].addNewMajorGridlines();
+		plotArea.getValAxArray()[0].addNewMajorGridlines();*/
+		
+		
+		
+		my_line_chart.setTitle("test");
 
 		/* Define Data sources for the chart */
 
@@ -884,21 +953,33 @@ public class Swingwindows implements ActionListener{
 
 		 */
 
-		ChartDataSource<Number> xs1 = DataSources.fromNumericCellRange(finalsheet, new CellRangeAddress(2, 50, 1, 1));
-
-		ChartDataSource<Number> ys1 = DataSources.fromNumericCellRange(finalsheet, new CellRangeAddress(2, 50, 2, 2));
 		
+		ChartDataSource<Number> xs1 = DataSources.fromNumericCellRange(sheet1, new CellRangeAddress(1, 99, 0, 0));
 
+		ChartDataSource<Number> ys1 = DataSources.fromNumericCellRange(sheet1, new CellRangeAddress(1, 99, 1, 1));
+		
+/*		seriesformat = chart.getSeriesFormat(1);
+		seriesformat.setSolid();
+		seriesformat.setForeColor(Color.RED.getRGB());
+		chart.setSeriesFormat(1, seriesformat);*/
 
 
 
 		/* Add chart data sources as data to the chart */
 
-		data.addSeries(xs1, ys1);
+		LineChartSeries chartSeries = data.addSeries(xs1,ys1);
+		chartSeries.setTitle("My Title");
+		
+	    setCatAxisTitle(my_line_chart, 0, "Depth(nm)");
+        setValueAxisTitle(my_line_chart, 0, "Concentration(atoms/cm3)");
+        setValueAxisTitle(my_line_chart,0,"Second Axis");
+
+		
+		my_line_chart.plot(data, my_line_chart.getAxis().get(0),my_line_chart.getAxis().get(1),my_line_chart.getAxis().get(2));
 
 		FileOutputStream stream1 = new FileOutputStream(
 
-				new File("C:\\Users\\Meng Xue\\Desktop\\final test.xlsx"));
+				new File("C:\\\\Users\\\\Jiahui\\\\Desktop\\\\final test.xlsx"));
 		
 		workbook12.write(stream1); // 写入文件
 
